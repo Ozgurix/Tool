@@ -1,0 +1,19 @@
+on:
+  push:
+    branch:
+      - master
+
+name: Test build of KVM-QEMU
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Run script file
+      run: |
+         sudo apt install libaio-dev libaio1 libxml2-utils -y
+         chmod a+x "${GITHUB_WORKSPACE}/Virtualization/kvm-qemu.sh"
+         BUILD_ENV=1 "${GITHUB_WORKSPACE}/Virtualization/kvm-qemu.sh" all
+
+      shell: bash
